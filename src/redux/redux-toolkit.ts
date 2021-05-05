@@ -1,5 +1,11 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import uuid from 'uuid'
+import {
+  configureStore,
+  createSlice,
+  getDefaultMiddleware,
+  PayloadAction,
+} from '@reduxjs/toolkit'
+import logger from 'redux-logger'
+import { v1 as uuid } from 'uuid'
 
 import { Todo } from '../type'
 
@@ -87,4 +93,47 @@ const todosSlice = createSlice({
       }
     },
   },
+})
+
+const selectedTodoSlice = createSlice({
+  name: 'selectedTodo',
+  initialState: null as string | null,
+  reducers: {
+    select: (_state, { payload }: PayloadAction<IdPayloadType>) => payload.id,
+  },
+})
+
+const counterSlice = createSlice({
+  name: 'counter',
+  initialState: 0,
+  reducers: {}, // doesn't have its own state and so reducers
+  extraReducers: {
+    [todosSlice.actions.create.type]: state => state + 1,
+    [todosSlice.actions.edit.type]: state => state + 1,
+    [todosSlice.actions.toggle.type]: state => state + 1,
+    [todosSlice.actions.remove.type]: state => state + 1,
+  },
+})
+
+// also export our actions
+export const {
+  create: createTodoActionCreator,
+  edit: editTodoActionCreator,
+  toggle: toggleTodoActionCreator,
+  remove: deleteTodoActionCreator,
+} = todosSlice.actions
+
+export const { select: selectTodoActionCreator } = selectedTodoSlice.actions
+
+// combine reducers by just using an objec/map notation
+const rootReducer = {
+  todos: todosSlice.reducer,
+  selectedTodo: selectedTodoSlice.reducer,
+  counter: counterSlice.reducer,
+}
+
+// create store
+export default configureStore({
+  reducer: rootReducer,
+  middleware: [...getDefaultMiddleware(), logger],
 })
