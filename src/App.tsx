@@ -3,20 +3,19 @@ import React, {
   FormEvent,
   useEffect,
   useRef,
-  useState
+  useState,
 } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import './App.css'
-import
-  {
-    createTodoActionCreator,
-    deleteTodoActionCreator,
-    editTodoActionCreator,
-    selectTodoActionCreator,
-    toggleTodoActionCreator
-  } from './redux/redux-previous'
+import {
+  createTodoActionCreator,
+  deleteTodoActionCreator,
+  editTodoActionCreator,
+  selectTodoActionCreator,
+  toggleTodoActionCreator,
+} from './redux/redux-toolkit'
+//from './redux/redux-previous'
 import { State } from './type'
-
 
 const App = () => {
   const dispatch = useDispatch()

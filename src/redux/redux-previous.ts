@@ -6,7 +6,7 @@ import thunk from 'redux-thunk'
 import { v1 as uuid } from 'uuid'
 import { Todo } from '../type'
 
-export const todosInitialState: Todo[] = [
+const todosInitialState: Todo[] = [
   {
     id: uuid(),
     desc: 'Learn React',
