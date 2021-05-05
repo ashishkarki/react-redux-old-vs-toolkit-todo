@@ -136,4 +136,5 @@ const rootReducer = {
 export default configureStore({
   reducer: rootReducer,
   middleware: [...getDefaultMiddleware(), logger],
+  devTools: process.env.NODE_ENV !== 'production',
 })
